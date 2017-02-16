@@ -1,7 +1,7 @@
 //#define MY_DEBUG    // Enables debug messages in the serial log
 //#define DEBUG
 
-#define ZOLDER
+#define OVERLOOP
 
 #ifdef WOONKAMER
   // Woonkamer 
@@ -32,7 +32,7 @@
   #define MY_NODE_ID 13 // Sets a static id for a node
   #define SN "Molgan eetkamer"
   #define LONG_SLEEP_LIGHT_LEVEL_LO  10 // if the light is below this value we will sleep longer
-  #define LONG_SLEEP_LIGHT_LEVEL_HI  20 // if the light is above this value we will sleep longer
+  #define LONG_SLEEP_LIGHT_LEVEL_HI  30 // if the light is above this value we will sleep longer
   #define LONG_SLEEP_TIME   300000L
   #define SHORT_SLEEP_TIME   60000L
   #define MAX_LIGHT_VAL   800

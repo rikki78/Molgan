@@ -1,6 +1,6 @@
 #define MY_RADIO_NRF24
 #define MY_BAUD_RATE  9600 // Sets the serial baud rate for console and serial gateway
-#define SV "2.0"
+#define SV "2.1"
 
 #include "sensor_defines.h"
 #include <EEPROM.h>
@@ -126,7 +126,14 @@ void resend(MyMessage &msg, int repeats) // Resend messages if not received by
     } 
     repeat++;
     wait(repeatDelay);
+  }/* 
+  if (ack)
+  {
+    Serial.print("Send ok ");
+    Serial.println(repeat);
   }
+  else
+    Serial.println("Send fail"); */
 }
 
 void sendMotion()
@@ -226,7 +233,7 @@ void sendLightValue()
   {
     if (sensorValue != lastLightLevel) 
     {
-      send(msgLight.set(sensorValue));
+      resend(msgLight.set(sensorValue), 3);
       lastLightLevel = sensorValue;
       #ifdef DEBUG
         Serial.print("L1: ");
@@ -240,8 +247,9 @@ void sendLightValue()
       sleepTime = LONG_SLEEP_TIME;
     else
       sleepTime = SHORT_SLEEP_TIME;
-    
-      
+    /* Serial.print("Sleep ");
+    Serial.println(sleepTime);
+     */  
   }
   
 }
@@ -318,7 +326,7 @@ void loop()
   if (sleep(INTERRUPT,CHANGE, sleepTime) == -1)  // -1 = by timer, 1 = by interrupt
   {
     wakeByMotion = false;
-//	Serial.println("Woke by timer");
+  //	Serial.println("Woke by timer");
 	}
   else  
     wakeByMotion = true;
